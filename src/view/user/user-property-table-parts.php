@@ -1,6 +1,6 @@
 <!-- 物件詳細 -->
 <table>
-<a href="#" class="property-title c"><? echo $val['PROPERTY_NAME']." ".$val['ROOM_NUMBER'] ?></a>
+<a href="#" id="property_detail_link_<? echo $key ?>" class="property-title c"><? echo $val['PROPERTY_NAME']." ".$val['ROOM_NUMBER'] ?></a>
   <tbody>
     <tr>
       <th>賃料 / 管理費</th>

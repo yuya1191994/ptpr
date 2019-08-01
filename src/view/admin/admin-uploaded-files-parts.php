@@ -10,7 +10,7 @@ if (count($files) > 0) {
         $fileName = substr($fileName, strpos($fileName, "bkkn_list_"));
         echo '<form action="action/deleteCsv.php" method="post">' . $fileName . '
                               <input type="hidden" name="delete-csv" value="' . $fileName . '">
-                              <input type="submit" value="削除"><br>
+                              <input type="submit" class="btn-red" value="削除"><br>
                             </form>';
 
         // 一括登録ボタンのvalueを設定
@@ -20,7 +20,7 @@ if (count($files) > 0) {
 ?>
     <form action="csv-confirm.php" method="post" target="_blank">
     <input type="hidden" name="insert-files" value="<? echo $insertFiles ?>">
-    <input type="submit" class="btn" value="このファイルを一括登録">
+    <input type="submit" class="btn btn-blue" value="このファイルを一括登録">
 </form>
 
 <? } ?>

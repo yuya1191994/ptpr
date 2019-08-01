@@ -4,6 +4,7 @@ $hoge = $_GET['property-id'];
 
 <?php require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/view/user/user-header.php"); ?>
 <?php
+require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/util/seculityFunctions.php");
 require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/DBHandle.php");
 require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/csvHandle.php");
 require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/propertyDetailReturn.php");

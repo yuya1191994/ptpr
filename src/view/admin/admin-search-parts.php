@@ -1,4 +1,4 @@
-<form action="admin.php#search_box" method="get">
+<form action="" id="filtered_search" method="get">
   <table class="ta1">
     <tr>
       <th>物件番号</th>
@@ -71,7 +71,7 @@
     </tr>
   </table>
   <div class="c mb30">
-    <input type="submit" name="search-submit" value="この条件で検索する" class="btn btn-blue">
+    <input type="button" id="search_submit" name="search-submit" value="この条件で検索する" class="btn btn-blue">
     <input type="hidden" name="order-by-condition" value="<? if (!empty($orderByCondition)) echo $orderByCondition;  ?>">
     <input type="hidden" name="displayed-result-cnt" value="<? if (!empty($displayedResultCnt)) echo $displayedResultCnt;  ?>">
     <input type="hidden" name="specified-page" value="<? if (!empty($speciFiedPage)) echo $speciFiedPage;  ?>">

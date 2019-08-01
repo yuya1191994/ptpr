@@ -4,6 +4,7 @@ include_once ($_SERVER["DOCUMENT_ROOT"] . "/ptpr-dev/src/action/DBHandle.php");
 include_once ($_SERVER["DOCUMENT_ROOT"] . "/ptpr-dev/src/action/uploadPropertyImage.php");
 include_once ($_SERVER["DOCUMENT_ROOT"] . "/ptpr-dev/src/action/deletePropertyImage.php");
 include_once ($_SERVER["DOCUMENT_ROOT"] . "/ptpr-dev/src/action/renamePropertyImage.php");
+include_once ($_SERVER["DOCUMENT_ROOT"] . "/ptpr-dev/src/util/seculityFunctions.php");
 
 $pKey = $_POST['pkey'];
 $sortImages = $_POST['sort-image-path'];
@@ -43,6 +44,25 @@ $propertyInfo['MEMO'] = $_POST['memo'];
 $propertyInfo['RELEASE_FLAG'] = $_POST['release-flag'];
 $propertyInfo['ROOM_PHOTO'] = $roomPhotoFlg;
 $propertyInfo['FREE_WORD'] = $_POST["addresses"].$_POST["property-name"].$_POST["train-route"].$_POST["station-name"].$_POST["building-type"].$_POST["remarks-2"];
+
+foreach ($propertyInfo as $val) {
+    if (is_array($val)) {
+        foreach($val as $v) {
+            $validateErr = str_validate($v);
+            if ($validateErr) {
+                echo $validateErr;
+                return;
+            }
+        }
+    } else if (is_string($val)){
+        $validateErr = str_validate($val);
+        if ($validateErr) {
+            echo $validateErr;
+            return;
+        }
+    }
+}
+
 
 $issueSql = new IssueSql();
 $updateSql = $issueSql->updatePropertyInfo($propertyInfo, $pKey);

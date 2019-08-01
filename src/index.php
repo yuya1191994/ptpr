@@ -1,5 +1,6 @@
 <?php require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/view/user/user-header.php"); ?>
 <?php
+require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/util/seculityFunctions.php");
 require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/DBHandle.php");
 require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/csvHandle.php");
 require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/userSearchConditions.php");
@@ -90,7 +91,7 @@ require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/userSearchConditio
               <? } ?>
               <? foreach ($propertyJson as $key => $val) { ?>
               <form action="property-detail.php" id="propertyForm_<?echo $key ?>" method="get">
-                <div id="propertyinfo_<? echo $key ?>" class="inlist <? if ($val['RELEASE_FLAG'] == 0) { echo "private"; } ?>">
+                <div id="propertyinfo_<? echo $key ?>" class="list inlist <? if ($val['RELEASE_FLAG'] == 0) { echo "private"; } ?>">
                   <!-- ポイントラベル -->
                   <? require('view/attention-marks-parts.php') ?>
                   <div class="subimgs clearfix">

@@ -1,4 +1,8 @@
 <?php
+require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/DBHandle.php");
+require_once ($_SERVER['DOCUMENT_ROOT'] . "/ptpr-dev/src/service/issueSql.php");
+require_once ($_SERVER['DOCUMENT_ROOT'] . "/ptpr-dev/src/util/seculityFunctions.php");
+
 $whereCondition = [];
 if (!empty($_GET['property-id']))
 { $whereCondition['PROPERTY_ID'] = $_GET['property-id']; }
@@ -30,6 +34,25 @@ if (!empty($_GET['displayed-result-cnt']))
 $currentPage = 1;
 if (!empty($_GET['specified-page']))
 { $currentPage = $_GET['specified-page']; }
+
+// 不整値が含まれていないかバリデート
+foreach ($whereCondition as $val) {
+    if (is_array($val)) {
+        foreach($val as $v) {
+            $validateErr = str_validate($v);
+            if ($validateErr) {
+                echo $validateErr;
+                return;
+            }
+        }
+    } else if (is_string($val)){
+        $validateErr = str_validate($val);
+        if ($validateErr) {
+            echo $validateErr;
+            return;
+        }
+    }
+}
 
 // 指定された件数分の物件情報を取得する。デフォルトは20件ずつ
 $issueSql = new IssueSql();

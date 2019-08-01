@@ -70,7 +70,7 @@
         <p>
           <a href="https://www.google.com/maps/place/<? echo $val['ADDRESS1'].$val['ADDRESS2'].$val['ADDRESS3'] ?>" target="_blank">地図をひらく</a>
         </p>
-        <input type="hidden" name="addresses" value="<? echo $val['ADDRESS1'].$val['ADDRESS2'].$val['ADDRESS3'] ?>">
+        <input type="hidden" id="addresses_<? echo $key ?>"name="addresses" value="<? echo $val['ADDRESS1'].$val['ADDRESS2'].$val['ADDRESS3'] ?>">
       </td>
     </tr>
 

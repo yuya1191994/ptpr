@@ -120,13 +120,13 @@ $(function() {
 	$('select[name=displayed-results-cnt]').on('change', function() {
 		let thisVal = $(this).val();
 		$('input[type=hidden][name=displayed-result-cnt]').val(thisVal);
-		$('input[type=submit][name=search-submit]').trigger('click');
+		$('input[type=button][name=search-submit]').trigger('click');
 	});
 
 	$('a[name^=displayed-result-]').on('click', function() {
 		let thisVal = $(this).attr('name');
 		$('input[type=hidden][name=specified-page]').val(thisVal.replace(/[^0-9]/g, ''));
-		$('input[type=submit][name=search-submit]').trigger('click');
+		$('input[type=button][name=search-submit]').trigger('click');
 	});
 
 
@@ -187,6 +187,38 @@ $(function() {
 		} else { alert(errMsg);	}
 	});
 
+	$('#search_submit').on('click', function() {
+		var data = {
+			"property-id" 			: $('[name=property-id]').val(),
+			"ad-flag"				: $('[name=ad-flag]').val(),
+			"release-flag"			: $('[name=release-flag]').val(),
+			"room-photo"			: $('[name=room-photo]').val(),
+			"new-arrival-flag"		: $('[name=new-arrival-flag]').val(),
+			"order-by-condition"	: $('[name=order-by-condition]').val(),
+			"displayed-result-cnt"	: $('[name=displayed-result-cnt]').val(),
+			"specified-page"		: $('[name=specified-page]').val()
+		}
+		$.get({
+		    url: "action/adminSearchConditions.php",
+            async: true,
+		    data: data,
+		})
+		.done(function(data, textStatus, jqXHR){
+			if (data == "") {
+				// TODO 将来的にはajaxで物件の順番を書き替えるようにする
+				var fm      = document.getElementById('filtered_search');
+				fm.method = "get";
+				fm.action = "admin.php#search_box";
+				fm.submit();
+			} else {
+				alert(data);
+			}
+	    })
+	    .fail(function(XMLHttpRequest, textStatus, errorThrown){
+	        alert(errorThrown);
+	    });
+	});
+
 	$('[id^=property_info_update_submit_]').on('click', function() {
 		var thisKey = $(this).attr('id').substr(-12);
 
@@ -198,14 +230,15 @@ $(function() {
 			"fax-number"		: $('#fax_number_' + thisKey).val(),
 			"property-name"	    : $('#property_name_' + thisKey).val(),
 			"room-number"	    : $('#room_number_' + thisKey).val(),
+			"addresses"			: $('#addresses_' + thisKey).val(),
 			"remarks-2"		    : $('#recommend_point_' + thisKey).text(),
 			"ad-flag"		    : $('[name=ad-flag-' + thisKey + ']:checked').val(),
 			"recommend-flag"    : $('[name=recommend-flag-' + thisKey + ']:checked').val(),
 			"memo"			    : $('#memo_' + thisKey).val(),
 			"release-flag"	    : $('[name=release-flag-' + thisKey + ']:checked').val(),
-			"train-route"		:$('#train_route_' + thisKey).val(),
-			"station-name"		:$('#station_name_' + thisKey).val(),
-			"building-type"		:$('#building_type_' + thisKey).val()
+			"train-route"		: $('#train_route_' + thisKey).val(),
+			"station-name"		: $('#station_name_' + thisKey).val(),
+			"building-type"		: $('#building_type_' + thisKey).val()
 		}
 		$.post({
 		    url: "controller/updatePropertyController.php",
@@ -213,16 +246,18 @@ $(function() {
 		    data: data,
 		})
 		.done(function(data, textStatus, jqXHR){
-			if ($('#upload_images_' + thisKey).val() == "") {
+			if (data == "") {
+				if ($('#upload_images_' + thisKey).val() != "") {
+					// 新規追加画像がある場合は、別窓で別途処理
+					var fm      = document.getElementById('updateForm_' + thisKey);
+					fm.method = "post";
+					fm.target = "_blank";
+					fm.action = "controller/uploadPropertyImageController.php";
+					fm.submit();
+				}
 				location.reload();
 			} else {
-				// 新規追加画像がある場合は、別窓で別途処理
-				var fm      = document.getElementById('updateForm_' + thisKey);
-				fm.method = "post";
-				fm.target = "_blank";
-				fm.action = "controller/uploadPropertyImageController.php";
-				fm.submit();
-				setTimeout(function(){ $('#property_info_update_submit_' + thisKey).trigger('click'); }, 300);
+				alert(data);
 			}
 	    })
 	    .fail(function(XMLHttpRequest, textStatus, errorThrown){

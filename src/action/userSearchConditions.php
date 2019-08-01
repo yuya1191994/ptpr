@@ -1,4 +1,8 @@
 <?php
+require_once ($_SERVER['DOCUMENT_ROOT']."/ptpr-dev/src/action/DBHandle.php");
+require_once ($_SERVER['DOCUMENT_ROOT'] . "/ptpr-dev/src/service/issueSql.php");
+require_once ($_SERVER['DOCUMENT_ROOT'] . "/ptpr-dev/src/util/seculityFunctions.php");
+
 $whereCondition = [];
 
 if (!empty($_GET['address1']))
@@ -14,7 +18,7 @@ if (!empty($_GET['minutes-walking']))
 
 if (!empty($_GET['building-year'])) {
     if ($_GET['building-year'] == '1') {
-        // 新築を選んだ時のみ築年数ではなく新築フラグに格納
+        // 新築を選んだ時のみ築年数ではなく新築フラグとして格納
         $whereCondition['NEW_CONSTRUCTION_FLAG'] = $_GET['building-year'];
     } else {
         $whereCondition['BUILDING_YEAR'] = $_GET['building-year'];
@@ -47,8 +51,8 @@ if ((isset($_GET['madori-room']) && is_array($_GET['madori-room']))
     $whereCondition['FLOOR_PLAN'] = $floorPlans;
 }
 
-if (!empty($_GET['floor-plan']))
-{ $whereCondition['FLOOR_PLAN'] = $_GET['floor-plan']; }
+// if (!empty($_GET['floor-plan']))
+// { $whereCondition['FLOOR_PLAN'] = $_GET['floor-plan']; }
 
 if (!empty($_GET['building-type']))
 { $whereCondition['BUILDING_TYPE'] = $_GET['building-type']; }
@@ -71,6 +75,25 @@ $currentPage = 1;
 if (!empty($_GET['specified-page']))
 { $currentPage = $_GET['specified-page']; }
 
+
+// 不整値が含まれていないかバリデート
+foreach ($whereCondition as $val) {
+    if (is_array($val)) {
+        foreach($val as $v) {
+            $validateErr = str_validate($v);
+            if ($validateErr) {
+                echo $validateErr;
+                return;
+            }
+        }
+    } else if (is_string($val)){
+        $validateErr = str_validate($val);
+        if ($validateErr) {
+            echo $validateErr;
+            return;
+        }
+    }
+}
 
 // 指定された件数分の物件情報を取得する。デフォルトは20件ずつ
 $roll = "user";

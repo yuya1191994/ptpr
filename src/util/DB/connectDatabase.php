@@ -3,10 +3,10 @@
 class ConnectDatabase
 {
 
-    // const HN = "mysql1014.db.sakura.ne.jp";
-    // const UN = "jokyo";
-    // const PW = "retate2019";
-    // const DB = "jokyo_linedechintai";
+//     const HN = "mysql1014.db.sakura.ne.jp";
+//     const UN = "jokyo";
+//     const PW = "stage0000";
+
     const HN = "localhost";
     const UN = "root";
     const PW = "dev";

@@ -24,7 +24,6 @@ if ($approvalUploadCsvCnt == $receiveCsvCnt) {
 
         clearstatcache();
         if (move_uploaded_file($tmp, $uploadPath)) {
-            echo "$uploadCsvFile のアップロードに成功しました。";
             $uploadCnt ++;
             // すべてアップロード完了したらリダイレクト
             if ($receiveCsvCnt - 1 == $i) {

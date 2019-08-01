@@ -16,7 +16,7 @@ $rails = ["----あ行----","池上線","伊勢崎線","五日市線","井の頭�
 $rents = ["3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5","7.0","7.5","8.0","8.5","9.0","9.5","10.0"];
 ?>
 
-<form action="index.php#search_box" method="get">
+<form action="index.php#search_box" id="filtered_search" method="get">
 <table class="ta1">
   <tr>
     <th>フリーワード<br>検索</th>
@@ -238,7 +238,7 @@ $rents = ["3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5","7.0","7.5","8.0","8.5
   </tr>
 </table>
 <div class="c mb30">
-  <button type="submit" name="search-submit" class="btn btn-lg btn-success"><i class='fab fa-line'></i>この条件で検索する</button>
+  <button type="button" id="search_submit" name="search-submit" class="btn btn-lg btn-success"><i class='fab fa-line'></i>この条件で検索する</button>
   <input type="hidden" name="order-by-condition" value="<? if (!empty($orderByCondition)) echo $orderByCondition;  ?>">
   <input type="hidden" name="displayed-result-cnt" value="<? if (!empty($displayedResultCnt)) echo $displayedResultCnt;  ?>">
   <input type="hidden" name="specified-page" value="<? if (!empty($speciFiedPage)) echo $speciFiedPage;  ?>">

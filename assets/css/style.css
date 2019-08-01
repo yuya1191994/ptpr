@@ -23,6 +23,7 @@ img {border: none;max-width: 100%;height: auto;vertical-align: middle;}
 div.subimgs {text-align: center;}
 p.subimg {display:inline-block;}
 .clearfix::after {clear: both; display: block;}
+img.mainimg {max-height: 300px;}
 img.subimg {border: none;max-width: 19%; margin-top: 5px; cursor: pointer; cursor: hand;}
 table {border-collapse:collapse;font-size: 100%;border-spacing: 0;width: 100%;}
 iframe {width: 100%;}
